@@ -1,0 +1,80 @@
+[template]
+number_of_shards = 1
+codec = "best_compression"
+
+[module_config]
+path = "${path.config}/modules.d/*.yml"
+processes = "['.*']"
+max_start_delay = "10s"
+
+[module_config.reload]
+enabled = true
+period = "30s"
+
+[modules]
+
+[modules.system]
+period = "30s"
+enabled = true
+metricsets = [
+  "cpu",
+  "core",
+  "filesystem",
+  "process",
+  "fsstat",
+  "load",
+  "memory",
+  "network",
+  "process_summary",
+  "uptime",
+  "diskio",
+  "socket",
+  "raid"
+]
+args = [
+  "diskio.include_devices: [\"vda\",\"vdb\"]",
+  "process.cmdline.include_top_n.enabled: false",
+  "process.cmdline.include_top_n.by_cpu: 0",
+  "process.cmdline.include_top_n.by_memory: 0",
+  "process.cmdline.env.whitelist: []",
+  "process.cmdline.cgroups.enabled: true",
+  "process.cmdline.cache.enabled: true",
+  "process.include_cpu_ticks: false",
+  "filesystem.ignore_types: []",
+  "core.metrics: [\"percentages\"]",
+  "cpu.metrics: [\"percentages\"]",
+  "raid.mount_point: '/'",
+  "socket.reverse_lookup.enabled: false",
+  "socket.reverse_lookup.success_ttl: 60s",
+  "socker.reverse_lookup.failure_ttl: 60s"
+]
+
+[dashboards]
+enabled = true
+include = [
+# "Metricbeat-apache-overview.json",
+# "Metricbeat-golang-overview.json",
+# "Metricbeat-mongodb-overview.json",
+# "Metricbeat-rabbitmq-overview.json",
+# "Metricbeat-uwsgi-overview.json",
+# "Metricbeat-containers-overview.json",
+# "Metricbeat-host-overview.json",
+# "Metricbeat-mysql-overview.json",
+# "Metricbeat-redis-overview.json",
+# "metricbeat-windows-service.json",
+# "Metricbeat-docker-overview.json",
+# "Metricbeat-kubernetes-overview.json",
+# "metricbeat-nginx-overview.json",
+  "Metricbeat-system-overview.json"
+]
+
+#[kibana]
+#enabled = true
+#host = "https://127.0.0.1:5601"
+
+[elasticsearch]
+enabled = true
+
+[[elasticsearch.members]]
+host = "localhost"
+port = 9200
