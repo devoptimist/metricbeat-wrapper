@@ -1,0 +1,27 @@
+#!/bin/bash
+
+exec 2>&1
+
+
+beat_config_file={{pkg.svc_config_path}}/metricbeat.yml
+
+pkg_kibana={{pkgPathFor "devoptimist/metricbeat"}}/static/kibana/6
+pkg_dash=${pkg_kibana}/dashboard
+pkg_indexp=${pkg_kibana}/index-pattern
+
+svc_kibana={{pkg.svc_static_path}}/kibana/6
+svc_dash=${svc_kibana}/dashboard
+svc_indexp=${svc_kibana}/index-pattern
+svc_logs={{pkg.svc_data_path}}/logs
+
+chown ${METRICBEAT_USER} ${beat_config_file}
+
+mkdir -p ${svc_logs}
+{{~#if cfg.dashboards.enabled}}
+mkdir -p ${svc_dash}
+mkdir -p ${svc_indexp}
+cp ${pkg_indexp}/metricbeat.json ${svc_indexp}
+{{~#each cfg.dashboards.include}}
+cp ${pkg_dash}/{{this}} ${svc_dash}/{{this}}
+{{~/each}}
+{{~/if}}

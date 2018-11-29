@@ -26,19 +26,12 @@ do_build() {
 }
 
 do_install() {
-  return 0
-}
-
-do_build_config() {
-  cp -r $(pkg_path_for devoptimist/metricbeat)/hooks ${pkg_prefix}
-  do_default_build_config
-  return $?
-}
-
-do_build_service() {
-  return 0
+  mkdir -p ${pkg_prefix}/config
+  cp $(pkg_path_for devoptimist/metricbeat)/config/fields.yml ${pkg_prefix}/config/
+  chown ${pkg_svc_user}:hab -R ${pkg_prefix}/config
 }
 
 do_setup_environment() {
+  set_runtime_env METRICBEAT_USER ${pkg_svc_user}
   set_runtime_env METRICBEAT_PATH $(pkg_path_for devoptimist/metricbeat)
 }

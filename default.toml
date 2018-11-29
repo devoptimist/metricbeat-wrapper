@@ -9,7 +9,7 @@ max_start_delay = "10s"
 
 [module_config.reload]
 enabled = true
-period = "30s"
+period = "60s"
 
 [modules]
 
@@ -32,7 +32,7 @@ metricsets = [
   "raid"
 ]
 args = [
-  "diskio.include_devices: [\"vda\",\"vdb\"]",
+  "diskio.include_devices: [\"xvda\"]",
   "process.cmdline.include_top_n.enabled: false",
   "process.cmdline.include_top_n.by_cpu: 0",
   "process.cmdline.include_top_n.by_memory: 0",
@@ -57,14 +57,14 @@ include = [
 # "Metricbeat-mongodb-overview.json",
 # "Metricbeat-rabbitmq-overview.json",
 # "Metricbeat-uwsgi-overview.json",
-# "Metricbeat-containers-overview.json",
-# "Metricbeat-host-overview.json",
 # "Metricbeat-mysql-overview.json",
 # "Metricbeat-redis-overview.json",
 # "metricbeat-windows-service.json",
-# "Metricbeat-docker-overview.json",
 # "Metricbeat-kubernetes-overview.json",
 # "metricbeat-nginx-overview.json",
+  "Metricbeat-containers-overview.json",
+  "Metricbeat-docker-overview.json",
+  "Metricbeat-host-overview.json",
   "Metricbeat-system-overview.json"
 ]
 
